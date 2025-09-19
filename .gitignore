@@ -1,0 +1,54 @@
+# Archivos de usuario de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Carpetas de compilación
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+
+# Configuración local
+*.local
+*.cache
+*.log
+
+# Archivos de bases de datos locales
+*.mdf
+*.ldf
+
+# Publicaciones temporales
+*.publish.xml
+
+# Archivos de empaquetado
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Archivos de prueba / cobertura
+TestResult*/
+*.coverage
+*.coveragexml
+
+# Archivos generados por herramientas
+_ReSharper*/
+*.DotSettings.user
+*.idea/
+*.vsidx
+*.dbmdl
+
+# Sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archivos de backup
+*.bak
+*.tmp
+*.swp

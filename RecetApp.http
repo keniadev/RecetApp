@@ -1,0 +1,6 @@
+@RecetApp_HostAddress = http://localhost:5182
+
+GET {{RecetApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
