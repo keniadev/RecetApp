@@ -4,7 +4,7 @@ using RecetApp.Dto;
 using RecetApp.Dto.Rol;
 using RecetApp.Models;
 
-namespace RecetApp.Endopoints
+namespace RecetApp.Endpoints
 {
     public static class RolEndpoint
     {

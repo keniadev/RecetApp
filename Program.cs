@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RecetApp.Data;
-using RecetApp.Endopoints;
 using RecetApp.Endpoints;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
