@@ -48,6 +48,13 @@ namespace RecetApp.Data
                 e.HasKey(r => r.Id);
                 e.Property(r => r.Nombre).IsRequired().HasMaxLength(50);
             });
+
+            // Semilla de Roles
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id = 1, Nombre = "Admin" },
+                new Rol { Id = 2, Nombre = "Usuario" }
+            );
+
             // RecetaFavorita
             modelBuilder.Entity<RecetaFavorita>(e =>
             {

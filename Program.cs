@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RecetApp.Data;
+using RecetApp.Endpoints;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,8 @@ var pg = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<RecetAppDb>(o => o.UseNpgsql(pg));
 
 
-var app = builder.Build(); 
+var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -20,7 +23,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+app.AddRolEnpoint();
+app.AddUsuarioEnpoint();
 
 var summaries = new[]
 {
