@@ -2,6 +2,7 @@
 using RecetApp.Data;
 using RecetApp.Dto;
 using RecetApp.Dto.Rol;
+using RecetApp.Dto.Usuario;
 using RecetApp.Models;
 
 namespace RecetApp.Endpoints
@@ -58,6 +59,40 @@ namespace RecetApp.Endpoints
                 .ToList();
 
                 return Results.Ok(roles);
+            });
+
+
+            // Obtener rol por Id
+            group.MapGet("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var rol = await db.Roles
+                    .Where(r => r.Id == id)
+                    .Select(u => new RolDTO(
+                        u.Id,
+                        u.Nombre
+                    ))
+                    .FirstOrDefaultAsync();
+
+                return rol != null ? Results.Ok(rol) : Results.NotFound();
+            });
+
+            // Modificar rol
+            group.MapPut("/{id:int}", async (RecetAppDb db, int id, ModificarRolDTO dto) =>
+            {
+                var rol = await db.Roles.FindAsync(id);
+                if (rol == null) return Results.NotFound();
+
+                if (!string.IsNullOrWhiteSpace(dto.Nombre))
+                    rol.Nombre = dto.Nombre;
+
+                await db.SaveChangesAsync();
+
+                var dtoSalida = new RolDTO(
+                    rol.Id,
+                    rol.Nombre
+                );
+
+                return Results.Ok(dtoSalida);
             });
 
 
