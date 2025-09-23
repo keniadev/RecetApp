@@ -2,9 +2,9 @@
 {
     public record ModificarUsuarioDTO
     (
-
         string Nombre,
         string? Email,
-        string? Clave
+        string? Clave,
+        string? FotoPerfilUrl
     );
 }

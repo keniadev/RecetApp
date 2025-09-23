@@ -12,6 +12,8 @@ namespace RecetApp.Data
         public DbSet<Rol> Roles { get; set; }
         public DbSet<RecetaFavorita> RecetasFavoritas { get; set; }
         public DbSet<Receta> Recetas { get; set; }
+        public DbSet<Imagen> Imagenes { get; set; }
+
         public DbSet<RecetaIngrediente> RecetaIngredientes { get; set; }
         public DbSet<Ingrediente> Ingredientes { get; set; }
         public DbSet<CategoriaReceta> CategoriaRecetas { get; set; }
@@ -27,7 +29,8 @@ namespace RecetApp.Data
                 e.Property(u => u.Nombre).IsRequired().HasMaxLength(100);
                 e.Property(u => u.Email).IsRequired().HasMaxLength(100);
                 e.Property(u => u.Clave).IsRequired().HasMaxLength(100);
-            // Relación con Rol
+                e.Property(u => u.FotoPerfilUrl).HasMaxLength(500);
+                // Relación con Rol
                 e.HasOne(u => u.Rol)
                  .WithMany(r => r.Usuarios)
                  .HasForeignKey(u => u.RolId)
@@ -79,6 +82,18 @@ namespace RecetApp.Data
                  .HasForeignKey(r => r.UsuarioId)
                  .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // Imagen
+            modelBuilder.Entity<Imagen>(e =>
+            {
+                e.HasKey(i => i.Id);
+                e.Property(i => i.Url).IsRequired().HasMaxLength(500);
+                e.HasOne(i => i.Receta)
+                 .WithMany(r => r.Imagenes)
+                 .HasForeignKey(i => i.RecetaId)
+                 .OnDelete(DeleteBehavior.Cascade);  
+            });
+
             // RecetaIngrediente
             modelBuilder.Entity<RecetaIngrediente>(e =>
             {

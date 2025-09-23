@@ -4,8 +4,7 @@
    (
         int Id,
         string Nombre,
-        string Email
-
-
+        string Email,
+        string? FotoPerfilUrl
    );
 }
