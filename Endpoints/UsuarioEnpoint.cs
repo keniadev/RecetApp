@@ -49,7 +49,8 @@ namespace RecetApp.Endpoints
                 var dtoSalida = new UsuarioDTO(
                     usuario.Id,
                     usuario.Nombre,
-                    usuario.Email
+                    usuario.Email,
+                    usuario.FotoPerfilUrl
                     
                 );
 
@@ -64,7 +65,8 @@ namespace RecetApp.Endpoints
                     .Select(u => new UsuarioDTO(
                         u.Id,
                         u.Nombre,
-                        u.Email
+                        u.Email,
+                        u.FotoPerfilUrl
                        
                     ))
                     .ToListAsync();
@@ -81,7 +83,8 @@ namespace RecetApp.Endpoints
                     .Select(u => new UsuarioDTO(
                         u.Id,
                         u.Nombre,
-                        u.Email
+                        u.Email,
+                        u.FotoPerfilUrl
                         
                     ))
                     .FirstOrDefaultAsync();
@@ -109,7 +112,8 @@ namespace RecetApp.Endpoints
                 var dtoSalida = new UsuarioDTO(
                     usuario.Id,
                     usuario.Nombre,
-                    usuario.Email
+                    usuario.Email,
+                    usuario.FotoPerfilUrl
                  
                 );
 

@@ -11,5 +11,7 @@
         public List<RecetaFavorita> RecetaFavoritas { get; set; } = new();
         public List<CategoriaReceta> CategoriaRecetas { get; set; } = new();
         public List<RecetaIngrediente> RecetaIngredientes { get; set; } = new();
+        public List<Imagen> Imagenes { get; set; } = new();
+
     }
 }
