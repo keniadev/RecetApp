@@ -9,7 +9,7 @@ namespace RecetApp.Endpoints
     public static class CategoriaEndpoint
     {
         // Método de extensión para mapear endpoints de categorías
-        public static void MapCategoriaEndpoints(this IEndpointRouteBuilder routes)
+        public static void AddCategoriaEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/categorias").WithTags("categorias");
 
