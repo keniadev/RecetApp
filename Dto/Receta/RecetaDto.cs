@@ -1,10 +1,14 @@
 ﻿namespace RecetApp.Dto.Receta
+
 {
-    public class RecetaDto
+    public record RecetaDto
     (
-     int Id,
-     string Titulo,
-     string Descripcion
+      int Id,
+        int UsuarioId,
+        string Titulo,
+        string Descripcion,
+        string? UsuarioNombre,
+        List<RecetApp.Dto.Imagen.ImagenDto> Imagenes
         );
     
 }
