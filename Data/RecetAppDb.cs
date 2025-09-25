@@ -18,6 +18,8 @@ namespace RecetApp.Data
         public DbSet<CategoriaReceta> CategoriaRecetas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
 
+        public DbSet<RecetaFavorita> RecetaFavoritas { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
