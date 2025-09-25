@@ -13,7 +13,6 @@ namespace RecetApp.Data
         public DbSet<RecetaFavorita> RecetasFavoritas { get; set; }
         public DbSet<Receta> Recetas { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
-
         public DbSet<RecetaIngrediente> RecetaIngredientes { get; set; }
         public DbSet<Ingrediente> Ingredientes { get; set; }
         public DbSet<CategoriaReceta> CategoriaRecetas { get; set; }
@@ -134,6 +133,13 @@ namespace RecetApp.Data
                 e.HasKey(c => c.Id);
                 e.Property(c => c.Nombre).IsRequired().HasMaxLength(100);
             });
+            //Imagen
+            modelBuilder.Entity<Imagen>(e =>
+            {
+                e.HasKey(i => i.Id);
+                e.Property(i => i.Url).IsRequired().HasMaxLength(200);
+            });
+
              base.OnModelCreating(modelBuilder);
 
         }

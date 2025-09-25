@@ -8,7 +8,7 @@ namespace RecetApp.Endpoints
 {
     public static class IngredienteEndpoint
     {
-        public static void MapIngredienteEndpoints(this IEndpointRouteBuilder routes)
+        public static void AddIngredienteEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/ingredientes").WithTags("ingredientes");
 
