@@ -29,14 +29,10 @@ app.UseHttpsRedirection();
 //  endpoints
 app.AddRolEnpoint();
 app.AddUsuarioEnpoint();
-<<<<<<< HEAD
+
 app.AddImagenEndpoint();
 app.AddRecetaEndpoint();
 
-=======
-app.AddCategoriaEndpoints();
-app.AddIngredienteEndpoints();
->>>>>>> 41a68b33a5487b00b71b80e5f3b47c07334ca25f
 
 var summaries = new[]
 {
