@@ -11,8 +11,8 @@ using RecetApp.Data;
 namespace RecetApp.Migrations
 {
     [DbContext(typeof(RecetAppDb))]
-    [Migration("20250921211430_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20250924193030_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,29 @@ namespace RecetApp.Migrations
                     b.HasIndex("RecetaId");
 
                     b.ToTable("CategoriaRecetas");
+                });
+
+            modelBuilder.Entity("RecetApp.Models.Imagen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RecetaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecetaId");
+
+                    b.ToTable("Imagenes");
                 });
 
             modelBuilder.Entity("RecetApp.Models.Ingrediente", b =>
@@ -211,6 +234,10 @@ namespace RecetApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("FotoPerfilUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -244,6 +271,17 @@ namespace RecetApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Categoria");
+
+                    b.Navigation("Receta");
+                });
+
+            modelBuilder.Entity("RecetApp.Models.Imagen", b =>
+                {
+                    b.HasOne("RecetApp.Models.Receta", "Receta")
+                        .WithMany("Imagenes")
+                        .HasForeignKey("RecetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Receta");
                 });
@@ -321,6 +359,8 @@ namespace RecetApp.Migrations
             modelBuilder.Entity("RecetApp.Models.Receta", b =>
                 {
                     b.Navigation("CategoriaRecetas");
+
+                    b.Navigation("Imagenes");
 
                     b.Navigation("RecetaFavoritas");
 

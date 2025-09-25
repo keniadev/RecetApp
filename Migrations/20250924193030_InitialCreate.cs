@@ -3,6 +3,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace RecetApp.Migrations
 {
     /// <inheritdoc />
@@ -60,6 +62,7 @@ namespace RecetApp.Migrations
                     Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Clave = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    FotoPerfilUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     RolId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -121,6 +124,26 @@ namespace RecetApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Imagenes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RecetaId = table.Column<int>(type: "integer", nullable: false),
+                    Url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imagenes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Imagenes_Recetas_RecetaId",
+                        column: x => x.RecetaId,
+                        principalTable: "Recetas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RecetaIngredientes",
                 columns: table => new
                 {
@@ -173,6 +196,15 @@ namespace RecetApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Nombre" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Usuario" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CategoriaRecetas_CategoriaId",
                 table: "CategoriaRecetas",
@@ -181,6 +213,11 @@ namespace RecetApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CategoriaRecetas_RecetaId",
                 table: "CategoriaRecetas",
+                column: "RecetaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Imagenes_RecetaId",
+                table: "Imagenes",
                 column: "RecetaId");
 
             migrationBuilder.CreateIndex(
@@ -225,6 +262,9 @@ namespace RecetApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CategoriaRecetas");
+
+            migrationBuilder.DropTable(
+                name: "Imagenes");
 
             migrationBuilder.DropTable(
                 name: "RecetaIngredientes");
