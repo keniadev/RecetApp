@@ -8,7 +8,7 @@ namespace RecetApp.Endpoints
 {
     public static class RecetaFavoritaEndpoint
     {
-        public static void MapRecetaFavoritaEndpoints(this IEndpointRouteBuilder routes)
+        public static void AddRecetaFavoritaEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/recetas-favoritas").WithTags("recetas-favoritas");
 
