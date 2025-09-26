@@ -60,6 +60,39 @@ namespace RecetApp.Endpoints
 
                 return imagen != null ? Results.Ok(imagen) : Results.NotFound();
             });
+
+            // EDITAR imagen
+            group.MapPut("/{id:int}", async (RecetAppDb db, int id, ModificarImagenDto dto) =>
+            {
+                var errores = new Dictionary<string, string[]>();
+
+                if (string.IsNullOrWhiteSpace(dto.Url))
+                    errores["Url"] = new[] { "La URL es requerida" };
+
+                if (errores.Count > 0)
+                    return Results.ValidationProblem(errores);
+
+                var imagen = await db.Imagenes.FindAsync(id);
+                if (imagen == null) return Results.NotFound();
+
+                imagen.Url = dto.Url;
+                await db.SaveChangesAsync();
+
+                var dtoSalida = new ImagenDto(imagen.Id, imagen.RecetaId, imagen.Url);
+                return Results.Ok(dtoSalida);
+            });
+
+            // ELIMINAR imagen 
+            group.MapDelete("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var imagen = await db.Imagenes.FindAsync(id);
+                if (imagen == null) return Results.NotFound();
+
+                db.Imagenes.Remove(imagen);
+                await db.SaveChangesAsync();
+
+                return Results.NoContent();
+            });
         }
     }
 }
