@@ -76,7 +76,54 @@ namespace RecetApp.Endpoints
                 await db.SaveChangesAsync();
 
                 return Results.NoContent();
-            });          
+            });
+
+
+            // Modificar receta favorita
+            group.MapPut("/{id:int}", async (RecetAppDb db, int id, RecetaFavoritaDTO dto) =>
+            {
+                var recetaFavorita = await db.RecetaFavoritas.FindAsync(id);
+                if (recetaFavorita == null)
+                    return Results.NotFound();
+
+                var errores = new Dictionary<string, string[]>();
+
+                // Validar que el nuevo usuario existe
+                var usuarioExiste = await db.Usuarios.AnyAsync(u => u.Id == dto.UsuarioId);
+                if (!usuarioExiste)
+                    errores["UsuarioId"] = new[] { "El usuario no existe" };
+
+                // Validar que la nueva receta existe
+                var recetaExiste = await db.Recetas.AnyAsync(r => r.Id == dto.RecetaId);
+                if (!recetaExiste)
+                    errores["RecetaId"] = new[] { "La receta no existe" };
+
+                // Validar que no existe
+                var yaExiste = await db.RecetaFavoritas
+                    .AnyAsync(rf => rf.Id != id && rf.UsuarioId == dto.UsuarioId && rf.RecetaId == dto.RecetaId);
+
+                if (yaExiste)
+                    errores["Relacion"] = new[] { "Ya existe esta relación de favoritos" };
+
+                if (errores.Count > 0)
+                    return Results.ValidationProblem(errores);
+
+                // Actualizar los valores
+                recetaFavorita.UsuarioId = dto.UsuarioId;
+                recetaFavorita.RecetaId = dto.RecetaId;
+
+                await db.SaveChangesAsync();
+
+                var dtoSalida = new RecetaFavoritaDTO(
+                    recetaFavorita.Id,
+                    recetaFavorita.UsuarioId,
+                    recetaFavorita.RecetaId
+                );
+
+                return Results.Ok(dtoSalida);
+            });
         }
     }
 }
+        
+    
