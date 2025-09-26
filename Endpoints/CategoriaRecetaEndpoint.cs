@@ -9,7 +9,7 @@ namespace RecetApp.Endpoints
 {
     public static class CategoriaRecetaEndpoint
     {
-        public static void MapCategoriaRecetaEndpoints(this IEndpointRouteBuilder routes)
+        public static void AddCategoriaRecetaEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/recetas/{recetaId:int}/categorias").WithTags("CategoriaReceta");
 
