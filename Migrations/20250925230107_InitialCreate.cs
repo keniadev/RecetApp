@@ -130,7 +130,7 @@ namespace RecetApp.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RecetaId = table.Column<int>(type: "integer", nullable: false),
-                    Url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                    Url = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,6 +141,32 @@ namespace RecetApp.Migrations
                         principalTable: "Recetas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecetaFavorita",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UsuarioId = table.Column<int>(type: "integer", nullable: false),
+                    RecetaId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecetaFavorita", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RecetaFavorita_Recetas_RecetaId",
+                        column: x => x.RecetaId,
+                        principalTable: "Recetas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RecetaFavorita_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,32 +196,6 @@ namespace RecetApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RecetasFavoritas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UsuarioId = table.Column<int>(type: "integer", nullable: false),
-                    RecetaId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RecetasFavoritas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RecetasFavoritas_Recetas_RecetaId",
-                        column: x => x.RecetaId,
-                        principalTable: "Recetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RecetasFavoritas_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Nombre" },
@@ -221,6 +221,16 @@ namespace RecetApp.Migrations
                 column: "RecetaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RecetaFavorita_RecetaId",
+                table: "RecetaFavorita",
+                column: "RecetaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecetaFavorita_UsuarioId",
+                table: "RecetaFavorita",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RecetaIngredientes_IngredienteId",
                 table: "RecetaIngredientes",
                 column: "IngredienteId");
@@ -233,16 +243,6 @@ namespace RecetApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Recetas_UsuarioId",
                 table: "Recetas",
-                column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecetasFavoritas_RecetaId",
-                table: "RecetasFavoritas",
-                column: "RecetaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecetasFavoritas_UsuarioId",
-                table: "RecetasFavoritas",
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
@@ -267,10 +267,10 @@ namespace RecetApp.Migrations
                 name: "Imagenes");
 
             migrationBuilder.DropTable(
-                name: "RecetaIngredientes");
+                name: "RecetaFavorita");
 
             migrationBuilder.DropTable(
-                name: "RecetasFavoritas");
+                name: "RecetaIngredientes");
 
             migrationBuilder.DropTable(
                 name: "Categorias");
