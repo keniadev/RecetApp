@@ -154,7 +154,7 @@ namespace RecetApp.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("RecetasFavoritas");
+                    b.ToTable("RecetaFavorita");
                 });
 
             modelBuilder.Entity("RecetApp.Models.RecetaIngrediente", b =>

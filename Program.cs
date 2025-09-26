@@ -31,6 +31,8 @@ app.AddUsuarioEnpoint();
 app.AddCategoriaEndpoints();
 app.AddIngredienteEndpoints();
 app.AddRecetaIngredienteEndpoints();
+app.AddRecetaFavoritaEndpoints();
+
 
 var summaries = new[]
 {
