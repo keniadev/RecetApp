@@ -27,13 +27,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/*app.AddRolEnpoint();
-app.AddUsuarioEnpoint();
-app.AddCategoriaEndpoints();
-app.AddIngredienteEndpoints();
-app.AddRecetaIngredienteEndpoints();*/
+
+
 
 app.UsarEnpoints();
+
+
+
+
 
 var summaries = new[]
 {

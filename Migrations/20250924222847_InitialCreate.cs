@@ -130,7 +130,7 @@ namespace RecetApp.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RecetaId = table.Column<int>(type: "integer", nullable: false),
-                    Url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                    Url = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
