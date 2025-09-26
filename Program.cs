@@ -1,3 +1,4 @@
+using Biblioteca.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using RecetApp.Data;
 using RecetApp.Endpoints;
@@ -26,11 +27,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.AddRolEnpoint();
+/*app.AddRolEnpoint();
 app.AddUsuarioEnpoint();
 app.AddCategoriaEndpoints();
 app.AddIngredienteEndpoints();
-app.AddRecetaIngredienteEndpoints();
+app.AddRecetaIngredienteEndpoints();*/
+
+app.UsarEnpoints();
 
 var summaries = new[]
 {
