@@ -95,6 +95,23 @@ namespace RecetApp.Endpoints
                 return Results.Ok(dtoSalida);
             });
 
+            // Eliminar rol
+            group.MapDelete("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var rol = await db.Roles.FindAsync(id);
+
+                if (rol == null)
+                    return Results.NotFound(new { mensaje = "Rol no encontrado" });
+
+                bool tieneUsuarios = await db.Usuarios.AnyAsync(u => u.RolId == id);
+                if (tieneUsuarios)
+                    return Results.BadRequest(new { mensaje = "No se puede eliminar el rol porque tiene usuarios asociados." });
+
+                db.Roles.Remove(rol);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(new { mensaje = "Rol eliminado correctamente" });
+            });
 
         }
     }
