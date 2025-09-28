@@ -11,7 +11,7 @@ using RecetApp.Data;
 namespace RecetApp.Migrations
 {
     [DbContext(typeof(RecetAppDb))]
-    [Migration("20250924192646_InitialCreate")]
+    [Migration("20250924222847_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,8 +78,8 @@ namespace RecetApp.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
