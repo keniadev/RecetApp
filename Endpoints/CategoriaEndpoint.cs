@@ -88,6 +88,17 @@ namespace RecetApp.Endpoints
 
                 return Results.Ok(dtoSalida);
             });
+
+            // Eliminar categoría
+            group.MapDelete("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var categoria = await db.Categorias.FindAsync(id);
+                if (categoria == null) return Results.NotFound();
+                db.Categorias.Remove(categoria);
+                await db.SaveChangesAsync();
+
+                return Results.NoContent();
+            });
         }
     }
 }
