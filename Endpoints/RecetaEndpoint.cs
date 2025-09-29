@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecetApp.Data;
+using RecetApp.Dto.Categoria;
 using RecetApp.Dto.Imagen;
 using RecetApp.Dto.Receta;
+using RecetApp.Dto.RecetaIngrediente;
 using RecetApp.Models;
+using System.Linq;
 
 namespace RecetApp.Endpoints
 {
@@ -52,33 +55,43 @@ namespace RecetApp.Endpoints
                 var recetas = await db.Recetas
                     .Include(r => r.Usuario)
                     .Include(r => r.Imagenes)
-                    .Select(r => new RecetaDto(
+
+                    .Select(r => new RecetaCardDto(
+
                         r.Id,
-                        r.UsuarioId,
                         r.Titulo,
-                        r.Descripcion,
-                        r.Usuario != null ? r.Usuario.Nombre : null,
-                        r.Imagenes.Select(i => new ImagenDto(i.Id, i.RecetaId, i.Url)).ToList()
-                    ))
+                        r.Imagenes.FirstOrDefault() != null ? r.Imagenes.First().Url : null,
+                        r.Usuario != null ? r.Usuario.Nombre : null
+                    )) 
                     .ToListAsync();
 
                 return Results.Ok(recetas);
             });
 
-            // Obtener receta por ID
             group.MapGet("/{id:int}", async (RecetAppDb db, int id) =>
             {
+                // Detalle completo de receta
                 var receta = await db.Recetas
                     .Include(r => r.Usuario)
                     .Include(r => r.Imagenes)
+                    .Include(r => r.CategoriaRecetas)
+                        .ThenInclude(cr => cr.Categoria)
+                    .Include(r => r.RecetaIngredientes)
+                        .ThenInclude(ri => ri.Ingrediente)
                     .Where(r => r.Id == id)
-                    .Select(r => new RecetaDto(
+                    .Select(r => new RecetaDetalleDto(
                         r.Id,
-                        r.UsuarioId,
                         r.Titulo,
                         r.Descripcion,
-                        r.Usuario!.Nombre,
-                        r.Imagenes.Select(i => new RecetApp.Dto.Imagen.ImagenDto(i.Id, i.RecetaId, i.Url)).ToList()
+                    r.Usuario != null ? r.Usuario.Nombre : null,
+                        r.CategoriaRecetas.Select(cr => new CategoriaDTO(cr.Categoria.Id, cr.Categoria.Nombre)).ToList(),
+                        r.RecetaIngredientes.Select(ri => new RecetaIngredienteDetalleDTO(
+                            ri.Ingrediente.Id,
+                            ri.Ingrediente.Nombre,
+                            ri.Cantidad,
+                            ri.Ingrediente.UnidadMedida
+                        )).ToList(),
+                        r.Imagenes.Select(i => new ImagenDto(i.Id, i.RecetaId, i.Url)).ToList()
                     ))
                     .FirstOrDefaultAsync();
 

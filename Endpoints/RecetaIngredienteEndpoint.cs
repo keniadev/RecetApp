@@ -44,6 +44,9 @@ namespace RecetApp.Endpoints
                     recIng.RecetaId,
                     recIng.IngredienteId,
                     recIng.Cantidad
+                    
+                    
+
                 );
 
                 return Results.Created($"/api/recetas-ingredientes/{recIng.Id}", dtoSalida);
@@ -58,6 +61,7 @@ namespace RecetApp.Endpoints
                         ri.RecetaId,
                         ri.IngredienteId,
                         ri.Cantidad
+                       
                     ))
                     .ToListAsync();
 

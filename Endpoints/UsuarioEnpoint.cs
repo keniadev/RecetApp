@@ -119,6 +119,22 @@ namespace RecetApp.Endpoints
 
                 return Results.Ok(dtoSalida);
             });
+
+
+            // Eliminar usuario
+            group.MapDelete("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var usuario = await db.Usuarios.FindAsync(id);
+
+                if (usuario == null)
+                    return Results.NotFound(new { mensaje = "Usuario no encontrado" });
+
+                db.Usuarios.Remove(usuario);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(new { mensaje = "Usuario eliminado correctamente" });
+            });
+
         }
     }
 }

@@ -98,6 +98,16 @@ namespace RecetApp.Endpoints
 
                 return Results.Ok(dtoSalida);
             });
+            // Eliminar Ingredientes
+            group.MapDelete("/{id:int}", async (RecetAppDb db, int id) =>
+            {
+                var Ingrediente = await db.Ingredientes.FindAsync(id);
+                if (Ingrediente == null) return Results.NotFound();
+                db.Ingredientes.Remove(Ingrediente);
+                await db.SaveChangesAsync();
+
+                return Results.NoContent();
+            });
         }
     }
 }
