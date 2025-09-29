@@ -108,7 +108,7 @@ namespace RecetApp.Endpoints
                 if (errores.Count > 0)
                     return Results.ValidationProblem(errores);
 
-                // Actualizar los valores
+                // Actualizacion
                 recetaFavorita.UsuarioId = dto.UsuarioId;
                 recetaFavorita.RecetaId = dto.RecetaId;
 
