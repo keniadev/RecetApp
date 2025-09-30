@@ -12,6 +12,17 @@ namespace RecetApp.Endpoints
         {
             var group = routes.MapGroup("/api/recetas-favoritas").WithTags("recetas-favoritas");
 
+
+            // Obtener las recetas favoritas
+            group.MapGet("/", async (RecetAppDb db) =>
+            {
+                var recetasFavoritas = await db.RecetaFavoritas
+                    .Select(rf => new RecetaFavoritaDTO(rf.Id, rf.UsuarioId, rf.RecetaId))
+                    .ToListAsync();
+
+                return Results.Ok(recetasFavoritas);
+            });
+
             // Agregar receta a favoritos 
             group.MapPost("/", async (RecetAppDb db, RecetaFavoritaDTO dto) =>
             {
